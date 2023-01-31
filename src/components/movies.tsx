@@ -34,7 +34,7 @@ export const Movies = () => {
     _id: "",
     name: "All genres",
   });
-  const [selectedSort, setSelectedSort] = useState<Sort>({
+  const [sortColumn, setSortColumn] = useState<Sort>({
     sortBy: "",
     sortOrder: "asc",
   });
@@ -47,8 +47,8 @@ export const Movies = () => {
     : movies;
   const sortedMovies = sortItems(
     filteredMovies,
-    selectedSort.sortBy,
-    selectedSort.sortOrder
+    sortColumn.sortBy,
+    sortColumn.sortOrder
   );
   const currenPageMovies = paginate(sortedMovies, moviesPerPage, currentPage);
 
@@ -90,11 +90,8 @@ export const Movies = () => {
       : setSelectedGenre({ _id: "", name: "All genres" });
   };
 
-  const handleSort = (_selectedSort: string) => {
-    setSelectedSort({
-      sortBy: _selectedSort,
-      sortOrder: selectedSort.sortOrder === "asc" ? "desc" : "asc",
-    });
+  const handleSort = (sortColumn: Sort) => {
+    setSortColumn(sortColumn);
   };
   /***render***/
   return (
@@ -123,8 +120,8 @@ export const Movies = () => {
                 onDelete={handleDelete}
                 onLikeClick={handleLikeClick}
                 currenPageMovies={currenPageMovies}
-                onSortSelect={handleSort}
-                selectedSort={selectedSort}
+                onSort={handleSort}
+                sortColumn={sortColumn}
               />
             </div>
           </div>

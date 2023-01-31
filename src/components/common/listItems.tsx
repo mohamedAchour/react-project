@@ -1,6 +1,13 @@
 import React from "react";
+import { Genre } from "../movies";
 
-export const ListItems = ({ items, onItemSelect, selectedItem }) => {
+export interface ListItemsProps {
+  items: any[];
+  selectedItem: Genre;
+  onItemSelect: (item: Genre) => void;
+}
+export const ListItems = (props: ListItemsProps) => {
+  const { items, onItemSelect, selectedItem } = props;
   if (items.length === 0) return null;
   return (
     <ul className="list-group me-5">

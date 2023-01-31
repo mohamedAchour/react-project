@@ -7,7 +7,8 @@ export interface LikeProps {
   isLiked: boolean;
   onLikeClick: MouseEventHandler<SVGSVGElement>;
 }
-export const Like = ({ isLiked, onLikeClick }: LikeProps) => {
+export const Like = (props: LikeProps) => {
+  const { isLiked, onLikeClick } = props;
   const likeIcon = () => {
     const iconType = isLiked ? solidHeart : regularHeart;
     return (

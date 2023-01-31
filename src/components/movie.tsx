@@ -8,18 +8,19 @@ export interface MovieProps {
   onDelete: (id: string) => void;
   isLiked: boolean;
 }
-export const Movie = ({
-  movie: {
-    _id,
-    title,
-    numberInStock,
-    genre: { name },
-    dailyRentalRate,
-  },
-  onLikeClick,
-  onDelete,
-  isLiked,
-}: MovieProps) => {
+export const Movie = (props: MovieProps) => {
+  const {
+    movie: {
+      _id,
+      title,
+      numberInStock,
+      genre: { name },
+      dailyRentalRate,
+    },
+    onLikeClick,
+    onDelete,
+    isLiked,
+  } = props;
   return (
     <tr key={_id}>
       <td>{title}</td>

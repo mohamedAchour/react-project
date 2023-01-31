@@ -1,80 +1,33 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
+
 import { Movie } from "./movie";
 import { MovieType, Sort } from "./movies";
+import { TableHeader } from "./common/tableHeader";
 
 export interface MoviesTableProps {
   onDelete: (id: string) => void;
   onLikeClick: (id: string) => void;
-  onSortSelect: (sortBy: string) => void;
+  onSort: (sortColumn: Sort) => void;
   currenPageMovies: MovieType[];
-  selectedSort: Sort;
+  sortColumn: Sort;
 }
 
-export const MoviesTable = ({
-  onDelete,
-  onLikeClick,
-  onSortSelect,
-  currenPageMovies,
-  selectedSort,
-}: MoviesTableProps) => {
-  const sortIcon = selectedSort.sortOrder === "asc" ? faSortUp : faSortDown;
+export const MoviesTable = (props: MoviesTableProps) => {
+  const { onDelete, onLikeClick, onSort, currenPageMovies, sortColumn } = props;
+
+  const moviesHeader = [
+    { name: "title", title: "title" },
+    { name: "genre.name", title: "genre" },
+    { name: "numberInStock", title: "stock" },
+    { name: "dailyRentalRate", title: "rate" },
+  ];
   return (
     <table style={{ tableLayout: "fixed" }} className="table table-fixed mb-5">
-      <thead>
-        <tr>
-          <th
-            style={{ cursor: "pointer", width: "25%" }}
-            scope="col"
-            onClick={() => {
-              onSortSelect("title");
-            }}
-          >
-            Title
-            {selectedSort.sortBy === "title" && (
-              <FontAwesomeIcon className="ms-2" icon={sortIcon} />
-            )}
-          </th>
-          <th
-            style={{ cursor: "pointer" }}
-            scope="col"
-            onClick={() => {
-              onSortSelect("genre.name");
-            }}
-          >
-            Genre
-            {selectedSort.sortBy === "genre.name" && (
-              <FontAwesomeIcon className="ms-2" icon={sortIcon} />
-            )}
-          </th>
-          <th
-            style={{ cursor: "pointer" }}
-            scope="col"
-            onClick={() => {
-              onSortSelect("numberInStock");
-            }}
-          >
-            Stock
-            {selectedSort.sortBy === "numberInStock" && (
-              <FontAwesomeIcon className="ms-2" icon={sortIcon} />
-            )}
-          </th>
-          <th
-            style={{ cursor: "pointer" }}
-            scope="col"
-            onClick={() => {
-              onSortSelect("dailyRentalRate");
-            }}
-          >
-            Rate
-            {selectedSort.sortBy === "dailyRentalRate" && (
-              <FontAwesomeIcon className="ms-2" icon={sortIcon} />
-            )}
-          </th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
+      <TableHeader
+        headerItems={moviesHeader}
+        sortColumn={sortColumn}
+        onSort={onSort}
+      />
       <tbody>
         {currenPageMovies.map((movie) => (
           <Movie

@@ -12,26 +12,6 @@ export const Pagination = ({
 
   /*don't show this component if all items appear on one page*/
   if (nbrOfPages <= 1) return null;
-  /**METHOD 1**/
-  // const pages = () => {
-  //   let pages = [];
-  //   for (let pgNumber = 0; pgNumber < nbrOfPages; pgNumber++) {
-  //     pages.push(
-  //       <li className="page-item" key={pgNumber}>
-  //         <a
-  //           className="page-link"
-  //           href="#"
-  //           onClick={() => {
-  //             onPageClick(pgNumber);
-  //           }}
-  //         >
-  //           {pgNumber + 1}
-  //         </a>
-  //       </li>
-  //     );
-  //   }
-  //   return pages;
-  // };
 
   return (
     <nav aria-label="Page navigation">
@@ -42,9 +22,6 @@ export const Pagination = ({
             <span className="sr-only">Previous</span>
           </a>
         </li>
-
-        {/**METHOD 1**/}
-        {/* {pages()} */}
 
         {pages.map((page) => (
           <li
