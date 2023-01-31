@@ -23,7 +23,7 @@ export interface Genre {
 }
 export interface Sort {
   sortBy: string;
-  sortOrder: string;
+  sortOrder: "asc" | "desc";
 }
 export const Movies = () => {
   /***states***/
@@ -31,35 +31,26 @@ export const Movies = () => {
   const [genres, setGenres] = useState<Genre[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedGenre, setSelectedGenre] = useState<Genre>({
-    _id: null,
-    name: null,
+    _id: "",
+    name: "All genres",
   });
   const [selectedSort, setSelectedSort] = useState<Sort>({
     sortBy: "",
-    sortOrder: "ASC",
+    sortOrder: "asc",
   });
 
   /***Variables***/
   const moviesPerPage = 4;
-  const filteredMoviesList = selectedGenre._id
-    ? sortItems(
-        movies.filter((movie) => movie.genre._id === selectedGenre._id),
-        selectedSort.sortBy,
-        selectedSort.sortBy === "genre" ? "name" : "",
-        selectedSort.sortOrder
-      )
-    : sortItems(
-        movies,
-        selectedSort.sortBy,
-        selectedSort.sortBy === "genre" ? "name" : "",
-        selectedSort.sortOrder
-      );
   const { length: count } = movies;
-  const currenPageMovies = paginate(
-    filteredMoviesList,
-    moviesPerPage,
-    currentPage
+  const filteredMovies = selectedGenre._id
+    ? movies.filter((movie) => movie.genre._id === selectedGenre._id)
+    : movies;
+  const sortedMovies = sortItems(
+    filteredMovies,
+    selectedSort.sortBy,
+    selectedSort.sortOrder
   );
+  const currenPageMovies = paginate(sortedMovies, moviesPerPage, currentPage);
 
   /***effects***/
   useEffect(() => {
@@ -96,13 +87,13 @@ export const Movies = () => {
   const handleGenreClick = (genre: Genre) => {
     genre._id
       ? setSelectedGenre(genre)
-      : setSelectedGenre({ _id: null, name: null });
+      : setSelectedGenre({ _id: "", name: "All genres" });
   };
 
   const handleSort = (_selectedSort: string) => {
     setSelectedSort({
       sortBy: _selectedSort,
-      sortOrder: selectedSort.sortOrder === "ASC" ? "DES" : "ASC",
+      sortOrder: selectedSort.sortOrder === "asc" ? "desc" : "asc",
     });
   };
   /***render***/
@@ -124,7 +115,7 @@ export const Movies = () => {
               <p className="h3 mb-5">
                 Showing
                 <span className="badge bg-success m-1 px-2 py-1">
-                  {filteredMoviesList.length}
+                  {filteredMovies.length}
                 </span>
                 movies in the database
               </p>
@@ -139,7 +130,7 @@ export const Movies = () => {
           </div>
           <div className="d-flex justify-content-center fixed-bottom">
             <Pagination
-              nbrItems={filteredMoviesList.length}
+              nbrItems={filteredMovies.length}
               itemsPerPage={moviesPerPage}
               currentPage={currentPage}
               onPageClick={handlePageClick}

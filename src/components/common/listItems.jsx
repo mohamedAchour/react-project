@@ -9,7 +9,7 @@ export const ListItems = ({ items, onItemSelect, selectedItem }) => {
         className={
           selectedItem._id ? "list-group-item" : "list-group-item active"
         }
-        onClick={() => onItemSelect({ _id: null, name: null })}
+        onClick={() => onItemSelect({ _id: "", name: "All genres" })}
       >
         All genres
       </li>

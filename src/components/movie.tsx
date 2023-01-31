@@ -6,7 +6,7 @@ export interface MovieProps {
   movie: MovieType;
   onLikeClick: (id: string) => void;
   onDelete: (id: string) => void;
-  isLiked: boolean | undefined;
+  isLiked: boolean;
 }
 export const Movie = ({
   movie: {

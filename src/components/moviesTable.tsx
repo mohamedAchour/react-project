@@ -7,19 +7,19 @@ import { MovieType, Sort } from "./movies";
 export interface MoviesTableProps {
   onDelete: (id: string) => void;
   onLikeClick: (id: string) => void;
-  currenPageMovies: MovieType[];
   onSortSelect: (sortBy: string) => void;
+  currenPageMovies: MovieType[];
   selectedSort: Sort;
 }
 
 export const MoviesTable = ({
   onDelete,
   onLikeClick,
-  currenPageMovies,
   onSortSelect,
+  currenPageMovies,
   selectedSort,
 }: MoviesTableProps) => {
-  const sortIcon = selectedSort.sortOrder === "ASC" ? faSortUp : faSortDown;
+  const sortIcon = selectedSort.sortOrder === "asc" ? faSortUp : faSortDown;
   return (
     <table style={{ tableLayout: "fixed" }} className="table table-fixed mb-5">
       <thead>
@@ -40,11 +40,11 @@ export const MoviesTable = ({
             style={{ cursor: "pointer" }}
             scope="col"
             onClick={() => {
-              onSortSelect("genre");
+              onSortSelect("genre.name");
             }}
           >
             Genre
-            {selectedSort.sortBy === "genre" && (
+            {selectedSort.sortBy === "genre.name" && (
               <FontAwesomeIcon className="ms-2" icon={sortIcon} />
             )}
           </th>
@@ -82,7 +82,7 @@ export const MoviesTable = ({
             movie={movie}
             onDelete={onDelete}
             onLikeClick={onLikeClick}
-            isLiked={movie.liked}
+            isLiked={movie.liked ?? false}
           />
         ))}
       </tbody>
