@@ -5,15 +5,36 @@ import { paginate } from "../utils/paginate";
 import { sortItems } from "../utils/sort";
 import { ListItems } from "./common/listItems";
 import { Pagination } from "./common/pagination";
-import { MoviesTbale } from "./moviesTable";
+import { MoviesTable } from "./moviesTable";
 
+export interface MovieType {
+  _id: string;
+  title: string;
+  genre: { _id: string; name: string };
+  numberInStock: number;
+  dailyRentalRate: number;
+  publishDate?: string;
+  liked?: boolean;
+}
+
+export interface Genre {
+  _id: string | null;
+  name: string | null;
+}
+export interface Sort {
+  sortBy: string;
+  sortOrder: string;
+}
 export const Movies = () => {
   /***states***/
-  const [movies, setMovies] = useState(getMovies());
-  const [genres, setGenres] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [selectedGenre, setSelectedGenre] = useState({ _id: null, name: null });
-  const [selectedSort, setSelectedSort] = useState({
+  const [movies, setMovies] = useState<MovieType[]>(getMovies());
+  const [genres, setGenres] = useState<Genre[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [selectedGenre, setSelectedGenre] = useState<Genre>({
+    _id: null,
+    name: null,
+  });
+  const [selectedSort, setSelectedSort] = useState<Sort>({
     sortBy: "",
     sortOrder: "ASC",
   });
@@ -24,13 +45,13 @@ export const Movies = () => {
     ? sortItems(
         movies.filter((movie) => movie.genre._id === selectedGenre._id),
         selectedSort.sortBy,
-        selectedSort.sortBy === "genre" ? "name" : null,
+        selectedSort.sortBy === "genre" ? "name" : "",
         selectedSort.sortOrder
       )
     : sortItems(
         movies,
         selectedSort.sortBy,
-        selectedSort.sortBy === "genre" ? "name" : null,
+        selectedSort.sortBy === "genre" ? "name" : "",
         selectedSort.sortOrder
       );
   const { length: count } = movies;
@@ -53,30 +74,32 @@ export const Movies = () => {
   }, [currenPageMovies, currentPage]);
 
   /***functions***/
-  const handleDelete = (id) => {
+  const handleDelete = (id: string) => {
     setMovies(movies.filter((movie) => movie._id !== id));
   };
 
-  const handleLikeClick = (id) => {
+  const handleLikeClick = (id: string) => {
     const tmp_movies = [...movies];
-    const selectedMovie = tmp_movies.find((movie) => movie._id === id);
+    const selectedMovie: MovieType | any = tmp_movies.find(
+      (movie) => movie._id === id
+    );
     const index = tmp_movies.indexOf(selectedMovie);
     tmp_movies[index].liked = !tmp_movies[index].liked;
 
     setMovies(tmp_movies);
   };
 
-  const handlePageClick = (pgNumber) => {
+  const handlePageClick = (pgNumber: number) => {
     setCurrentPage(pgNumber);
   };
 
-  const handleGenreClick = (genre) => {
+  const handleGenreClick = (genre: Genre) => {
     genre._id
       ? setSelectedGenre(genre)
       : setSelectedGenre({ _id: null, name: null });
   };
 
-  const handleSort = (_selectedSort) => {
+  const handleSort = (_selectedSort: string) => {
     setSelectedSort({
       sortBy: _selectedSort,
       sortOrder: selectedSort.sortOrder === "ASC" ? "DES" : "ASC",
@@ -105,7 +128,7 @@ export const Movies = () => {
                 </span>
                 movies in the database
               </p>
-              <MoviesTbale
+              <MoviesTable
                 onDelete={handleDelete}
                 onLikeClick={handleLikeClick}
                 currenPageMovies={currenPageMovies}

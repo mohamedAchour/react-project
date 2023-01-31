@@ -2,14 +2,23 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
 import { Movie } from "./movie";
+import { MovieType, Sort } from "./movies";
 
-export const MoviesTbale = ({
+export interface MoviesTableProps {
+  onDelete: (id: string) => void;
+  onLikeClick: (id: string) => void;
+  currenPageMovies: MovieType[];
+  onSortSelect: (sortBy: string) => void;
+  selectedSort: Sort;
+}
+
+export const MoviesTable = ({
   onDelete,
   onLikeClick,
   currenPageMovies,
   onSortSelect,
   selectedSort,
-}) => {
+}: MoviesTableProps) => {
   const sortIcon = selectedSort.sortOrder === "ASC" ? faSortUp : faSortDown;
   return (
     <table style={{ tableLayout: "fixed" }} className="table table-fixed mb-5">

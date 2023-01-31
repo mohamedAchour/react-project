@@ -1,6 +1,11 @@
+import { MovieType } from "./../components/movies";
 import _ from "lodash";
 
-export const paginate = (items, itemsPerPage, pageNumber) => {
+export const paginate = (
+  items: MovieType[],
+  itemsPerPage: number,
+  pageNumber: number
+) => {
   const startIndex = (pageNumber - 1) * itemsPerPage;
 
   //return items.slice(startIndex, startIndex + itemsPerPage);

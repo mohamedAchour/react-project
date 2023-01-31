@@ -1,6 +1,13 @@
 import React from "react";
 import { Like } from "./common/like";
+import { MovieType } from "./movies";
 
+export interface MovieProps {
+  movie: MovieType;
+  onLikeClick: (id: string) => void;
+  onDelete: (id: string) => void;
+  isLiked: boolean | undefined;
+}
 export const Movie = ({
   movie: {
     _id,
@@ -12,7 +19,7 @@ export const Movie = ({
   onLikeClick,
   onDelete,
   isLiked,
-}) => {
+}: MovieProps) => {
   return (
     <tr key={_id}>
       <td>{title}</td>
