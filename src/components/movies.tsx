@@ -26,7 +26,6 @@ export interface Sort {
   sortOrder: "asc" | "desc";
 }
 export const Movies = () => {
-  /***states***/
   const [movies, setMovies] = useState<MovieType[]>(getMovies());
   const [genres, setGenres] = useState<Genre[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -38,33 +37,31 @@ export const Movies = () => {
     sortBy: "",
     sortOrder: "asc",
   });
-
-  /***Variables***/
   const moviesPerPage = 4;
-  const { length: count } = movies;
-  const filteredMovies = selectedGenre._id
-    ? movies.filter((movie) => movie.genre._id === selectedGenre._id)
-    : movies;
-  const sortedMovies = sortItems(
-    filteredMovies,
-    sortColumn.sortBy,
-    sortColumn.sortOrder
-  );
-  const currenPageMovies = paginate(sortedMovies, moviesPerPage, currentPage);
 
-  /***effects***/
-  useEffect(() => {
-    setMovies(getMovies());
-    setGenres(getGenres());
-  }, []);
+  const getPagedMovies = () => {
+    const filteredMovies = selectedGenre._id
+      ? movies.filter((movie) => movie.genre._id === selectedGenre._id)
+      : movies;
+    const sortedMovies = sortItems(
+      filteredMovies,
+      sortColumn.sortBy,
+      sortColumn.sortOrder
+    );
+    const currenPagedMovies = paginate(
+      sortedMovies,
+      moviesPerPage,
+      currentPage
+    );
 
-  useEffect(() => {
-    if (currenPageMovies.length === 0) {
-      setCurrentPage(currentPage - 1);
-    }
-  }, [currenPageMovies, currentPage]);
+    return {
+      currenPagedMovies: currenPagedMovies,
+      totalCount: filteredMovies.length,
+    };
+  };
 
-  /***functions***/
+  const { currenPagedMovies, totalCount } = getPagedMovies();
+
   const handleDelete = (id: string) => {
     setMovies(movies.filter((movie) => movie._id !== id));
   };
@@ -93,48 +90,55 @@ export const Movies = () => {
   const handleSort = (sortColumn: Sort) => {
     setSortColumn(sortColumn);
   };
+
+  /***effects***/
+  useEffect(() => {
+    setMovies(getMovies());
+    setGenres(getGenres());
+  }, []);
+
+  useEffect(() => {
+    if (currenPagedMovies.length === 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  }, [currenPagedMovies.length, currentPage]);
   /***render***/
+  const { length: count } = movies;
+  if (count === 0)
+    return <p className="h3">The are no movies in the database</p>;
   return (
     <>
-      {count === 0 ? (
-        <p className="h3">The are no movies in the database</p>
-      ) : (
-        <>
-          <div className="row">
-            <div className="col-2">
-              <ListItems
-                items={genres}
-                selectedItem={selectedGenre}
-                onItemSelect={handleGenreClick}
-              />
-            </div>
-            <div className="col">
-              <p className="h3 mb-5">
-                Showing
-                <span className="badge bg-success m-1 px-2 py-1">
-                  {filteredMovies.length}
-                </span>
-                movies in the database
-              </p>
-              <MoviesTable
-                onDelete={handleDelete}
-                onLikeClick={handleLikeClick}
-                currenPageMovies={currenPageMovies}
-                onSort={handleSort}
-                sortColumn={sortColumn}
-              />
-            </div>
-          </div>
-          <div className="d-flex justify-content-center fixed-bottom">
-            <Pagination
-              nbrItems={filteredMovies.length}
-              itemsPerPage={moviesPerPage}
-              currentPage={currentPage}
-              onPageClick={handlePageClick}
-            />
-          </div>
-        </>
-      )}
+      <div className="row">
+        <div className="col-2">
+          <ListItems
+            items={genres}
+            selectedItem={selectedGenre}
+            onItemSelect={handleGenreClick}
+          />
+        </div>
+        <div className="col">
+          <p className="h3 mb-5">
+            Showing
+            <span className="badge bg-success m-1 px-2 py-1">{totalCount}</span>
+            movies in the database
+          </p>
+          <MoviesTable
+            onDelete={handleDelete}
+            onLikeClick={handleLikeClick}
+            currenPageMovies={currenPagedMovies}
+            onSort={handleSort}
+            sortColumn={sortColumn}
+          />
+        </div>
+      </div>
+      <div className="d-flex justify-content-center fixed-bottom">
+        <Pagination
+          nbrItems={totalCount}
+          itemsPerPage={moviesPerPage}
+          currentPage={currentPage}
+          onPageClick={handlePageClick}
+        />
+      </div>
     </>
   );
 };
