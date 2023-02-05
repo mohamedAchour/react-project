@@ -7,12 +7,12 @@ export interface TableBodyProps {
   columns: any[];
 }
 
-type column = {
+export interface column {
   path: string;
   title: string;
   key: string;
   content: (movie: MovieType) => JSX.Element;
-};
+}
 export const TableBody: React.FC<TableBodyProps> = (props) => {
   const { data, columns } = props;
 

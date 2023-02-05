@@ -1,9 +1,7 @@
 import React from "react";
-
 import { MovieType, Sort } from "./movies";
-import { TableHeader } from "./common/tableHeader";
-import { TableBody } from "./common/tableBody";
 import { Like } from "./common/like";
+import { Table } from "./common/table";
 
 export interface MoviesTableProps {
   onDelete: (id: string) => void;
@@ -41,13 +39,11 @@ export const MoviesTable = (props: MoviesTableProps) => {
   ];
 
   return (
-    <table style={{ tableLayout: "fixed" }} className="table table-fixed">
-      <TableHeader
-        headerItems={columns}
-        sortColumn={sortColumn}
-        onSort={onSort}
-      />
-      <TableBody data={currenPageMovies} columns={columns} />
-    </table>
+    <Table
+      items={currenPageMovies}
+      columns={columns}
+      sortColumn={sortColumn}
+      onSort={onSort}
+    />
   );
 };

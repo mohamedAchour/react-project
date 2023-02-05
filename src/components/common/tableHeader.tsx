@@ -4,12 +4,12 @@ import { faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
 import { Sort } from "../movies";
 
 export interface TableHeaderProps {
-  headerItems: any[];
+  columns: any[];
   sortColumn: Sort;
   onSort: (sortColumn: Sort) => void;
 }
 export const TableHeader = (props: TableHeaderProps) => {
-  const { headerItems, sortColumn, onSort } = props;
+  const { columns: headerItems, sortColumn, onSort } = props;
   const raiseSort = (sortBy: string) => {
     const _sortColumn: Sort =
       sortColumn.sortBy === sortBy
