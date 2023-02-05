@@ -24,7 +24,7 @@ export const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <a className="navbar-brand" href="#">
-          Navbar
+          M. Achour
         </a>
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">

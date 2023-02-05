@@ -10,7 +10,7 @@ export const ListItems = (props: ListItemsProps) => {
   const { items, onItemSelect, selectedItem } = props;
   if (items.length === 0) return null;
   return (
-    <ul className="list-group me-5">
+    <ul className="list-group">
       <li
         style={{ cursor: "pointer" }}
         className={

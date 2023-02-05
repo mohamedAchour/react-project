@@ -69,7 +69,7 @@ export const Movies = () => {
     setMovies(movies.filter((movie) => movie._id !== id));
   };
 
-  const handleLikeClick = (id: string) => {
+  const handleLikeClick = (id: string | undefined) => {
     const tmp_movies = [...movies];
     const selectedMovie: MovieType | any = tmp_movies.find(
       (movie) => movie._id === id
@@ -101,7 +101,7 @@ export const Movies = () => {
       ) : (
         <>
           <div className="row">
-            <div className="col-3">
+            <div className="col-2">
               <ListItems
                 items={genres}
                 selectedItem={selectedGenre}

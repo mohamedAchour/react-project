@@ -4,8 +4,8 @@ import { faHeart as regularHeart } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export interface LikeProps {
-  isLiked: boolean;
-  onLikeClick: MouseEventHandler<SVGSVGElement>;
+  isLiked?: boolean;
+  onLikeClick?: MouseEventHandler<SVGSVGElement>;
 }
 export const Like = (props: LikeProps) => {
   const { isLiked, onLikeClick } = props;

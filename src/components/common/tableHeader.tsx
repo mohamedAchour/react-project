@@ -31,22 +31,22 @@ export const TableHeader = (props: TableHeaderProps) => {
       <tr>
         {headerItems.map((item) => (
           <th
+            key={item.path || item.key}
             style={{
               cursor: "pointer",
               width: item === headerItems[0] ? "25%" : "20%",
             }}
             scope="col"
             onClick={() => {
-              raiseSort(item.name);
+              raiseSort(item.path);
             }}
           >
             {item.title}
-            {sortColumn.sortBy === item.name && (
+            {sortColumn.sortBy === item.path && (
               <FontAwesomeIcon className="ms-2" icon={sortIcon} />
             )}
           </th>
         ))}
-        <th scope="col"></th>
       </tr>
     </thead>
   );
