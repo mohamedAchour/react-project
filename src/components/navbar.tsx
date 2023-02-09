@@ -5,7 +5,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/profile">
+        <Link className="navbar-brand" to="/profiles">
           <img
             src="http://www.epicareathome.com/wp-content/uploads/2021/10/icon-patients.png"
             width="30"
@@ -38,8 +38,13 @@ export const Navbar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/contact" tabIndex={-1}>
+              <Link className="nav-link" to="/contact">
                 Contact
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/posts">
+                Posts
               </Link>
             </li>
           </ul>
