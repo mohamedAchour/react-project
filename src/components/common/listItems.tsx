@@ -14,7 +14,7 @@ export const ListItems = (props: ListItemsProps) => {
       <li
         style={{ cursor: "pointer" }}
         className={
-          selectedItem._id ? "list-group-item" : "list-group-item active"
+          selectedItem._id ? "list-group-item " : "list-group-item active"
         }
         onClick={() => onItemSelect({ _id: "", name: "All genres" })}
       >

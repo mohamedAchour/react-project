@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/profiles">
+        <NavLink className="navbar-brand" to="/profile">
           <img
             src="http://www.epicareathome.com/wp-content/uploads/2021/10/icon-patients.png"
             width="30"
@@ -13,7 +13,7 @@ export const Navbar = () => {
             alt=""
           />
           <p style={{ display: "inline", paddingLeft: "10px" }}>M. Achour</p>
-        </Link>
+        </NavLink>
         <button
           className="navbar-toggler"
           type="button"
@@ -28,24 +28,34 @@ export const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">
+              <NavLink className="nav-link " to="/">
                 Home
-              </Link>
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/about">
-                About
-              </Link>
+              <NavLink className="nav-link" to="/movies">
+                Movies
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/contact">
-                Contact
-              </Link>
+              <NavLink className="nav-link" to="/products">
+                Products
+              </NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/posts">
+              <NavLink className="nav-link" to="/posts">
                 Posts
-              </Link>
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/about">
+                About
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/admin">
+                Admin
+              </NavLink>
             </li>
           </ul>
           <form className="d-flex">

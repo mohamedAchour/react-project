@@ -20,9 +20,9 @@ export const TableBody: React.FC<TableBodyProps> = (props) => {
     return row._id + (column.path || column.key);
   };
   const renderCell = (row: MovieType, column: column) => {
-    if (column.path)
-      return <td key={cellKey(row, column)}>{_.get(row, column.path)}</td>;
-    else return <td key={cellKey(row, column)}>{column.content(row)}</td>;
+    if (column.content)
+      return <td key={cellKey(row, column)}>{column.content(row)}</td>;
+    else return <td key={cellKey(row, column)}>{_.get(row, column.path)}</td>;
   };
   return (
     <tbody>

@@ -3,11 +3,13 @@ import { Movies } from "./components/movies";
 import { Navbar } from "./components/navbar";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { About } from "./routes/about";
-import { Contact } from "./routes/contact";
 import { Profile } from "./routes/profile";
-import { Profiles } from "./routes/profiles";
+import { Products } from "./routes/products";
 import { Posts } from "./routes/posts";
 import { NotFound } from "./routes/not-found";
+import { Admin } from "./routes/admin/admin";
+import { Home } from "./routes/home";
+import { MoviesForm } from "./components/movies-form";
 
 function App() {
   return (
@@ -19,19 +21,21 @@ function App() {
           {/* to pass props to a component use render instead */}
           {/* pass down all other propos */}
 
-          <Route path="/profiles/:id" component={Profile} />
-          <Route path="/profiles" component={Profiles} />
+          <Route path="/movies/:id" component={MoviesForm} />
+          <Route path="/movies/" component={Movies} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/products" component={Products} />
           <Route path="/about" component={About} />
-          <Route path="/contact" component={Contact} />
+          <Route path="/admin" component={Admin} />
           {/* sometimes we may redirect resources to another url, to not lose users redirect them to a new route */}
-          <Redirect from="/messages" to="/posts" />
+          <Redirect from="/messages" exact to="/posts" />
           {/* if optional params make no sense, include them in query string */}
           <Route
             path="/posts/:year?/:month?"
             render={(props) => <Posts sortBy="newest" {...props} />}
           />
           <Route path="/not-found" component={NotFound} />
-          <Route exact path="/" component={Movies} />
+          <Route exact path="/" component={Home} />
           <Redirect to="/not-found" />
         </Switch>
       </main>

@@ -42,7 +42,7 @@ export const TableHeader = (props: TableHeaderProps) => {
             }}
           >
             {item.title}
-            {sortColumn.sortBy === item.path && (
+            {!item.key && sortColumn.sortBy === item.path && (
               <FontAwesomeIcon className="ms-2" icon={sortIcon} />
             )}
           </th>

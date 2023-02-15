@@ -2,6 +2,7 @@ import React from "react";
 import { MovieType, Sort } from "./movies";
 import { Like } from "./common/like";
 import { Table } from "./common/table";
+import { Link } from "react-router-dom";
 
 export interface MoviesTableProps {
   onDelete: (id: string) => void;
@@ -15,10 +16,18 @@ export const MoviesTable = (props: MoviesTableProps) => {
   const { onDelete, onLikeClick, onSort, currenPageMovies, sortColumn } = props;
 
   const columns = [
-    { path: "title", title: "title" },
-    { path: "genre.name", title: "genre" },
-    { path: "numberInStock", title: "stock" },
-    { path: "dailyRentalRate", title: "rate" },
+    {
+      path: "title",
+      title: "Title",
+      content: (movie: MovieType) => (
+        <Link to={`/movies/${movie._id}`} className="text-decoration-none">
+          {movie.title}
+        </Link>
+      ),
+    },
+    { path: "genre.name", title: "Genre" },
+    { path: "numberInStock", title: "Stock" },
+    { path: "dailyRentalRate", title: "Rate" },
     {
       key: "like",
       content: (movie: MovieType) => (
