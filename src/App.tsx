@@ -1,15 +1,16 @@
-import React from "react";
-import { Movies } from "./components/movies";
-import { Navbar } from "./components/navbar";
-import { Route, Switch, Redirect } from "react-router-dom";
-import { About } from "./routes/about";
-import { Profile } from "./routes/profile";
-import { Products } from "./routes/products";
-import { Posts } from "./routes/posts";
-import { NotFound } from "./routes/not-found";
-import { Admin } from "./routes/admin/admin";
-import { Home } from "./routes/home";
-import { MoviesForm } from "./components/movies-form";
+import React from 'react';
+import { Movies } from './components/movies';
+import { Navbar } from './components/navbar';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { About } from './routes/about';
+import { Profile } from './routes/profile';
+import { Products } from './routes/products';
+import { Posts } from './routes/posts';
+import { NotFound } from './routes/not-found';
+import { Admin } from './routes/admin/admin';
+import { Home } from './routes/home';
+import { MoviesForm } from './components/movies-form';
+import { LoginForm } from './components/loginForm';
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
           {/* pass down all other propos */}
 
           <Route path="/movies/:id" component={MoviesForm} />
-          <Route path="/movies/" component={Movies} />
+          <Route path="/movies" component={Movies} />
+          <Route path="/login" component={LoginForm} />
           <Route path="/profile" component={Profile} />
           <Route path="/products" component={Products} />
           <Route path="/about" component={About} />

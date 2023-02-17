@@ -1,5 +1,5 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 export const Navbar = () => {
   return (
@@ -12,19 +12,9 @@ export const Navbar = () => {
             height="30"
             alt=""
           />
-          <p style={{ display: "inline", paddingLeft: "10px" }}>M. Achour</p>
+          <p style={{ display: 'inline', paddingLeft: '10px' }}>M. Achour</p>
         </NavLink>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarTogglerDemo03"
-          aria-controls="navbarTogglerDemo03"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+
         <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
@@ -58,16 +48,19 @@ export const Navbar = () => {
               </NavLink>
             </li>
           </ul>
-          <form className="d-flex">
+          <form className="d-lg-flex">
             <input
               className="form-control me-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
             />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
+
+            <li className="btn btn-outline-success">
+              <NavLink className="nav-link text-nowrap" to="/login">
+                Log in
+              </NavLink>
+            </li>
           </form>
         </div>
       </div>
