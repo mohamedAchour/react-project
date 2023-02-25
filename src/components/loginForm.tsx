@@ -36,7 +36,6 @@ export const LoginForm = () => {
 
     if (error) errorsTmp[name] = error;
     else delete errorsTmp[name];
-    console.log(errors);
     setErrors(errorsTmp);
     const accountTmp: AccountState = { ...account };
     const currentField = name;
@@ -67,7 +66,11 @@ export const LoginForm = () => {
           error={errors?.password}
           required
         />
-        <button type="submit" className="btn btn-primary">
+        <button
+          type="submit"
+          disabled={!!formValidate(account)}
+          className={`btn btn-primary`}
+        >
           Login
         </button>
       </form>
