@@ -1,14 +1,14 @@
-import React from "react";
-import { MovieType, Sort } from "./movies";
-import { Like } from "./common/like";
-import { Table } from "./common/table";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { MovieState, Sort } from './movies';
+import { Like } from './common/like';
+import { Table } from './common/table';
+import { Link } from 'react-router-dom';
 
 export interface MoviesTableProps {
   onDelete: (id: string) => void;
   onLikeClick: (id: string | undefined) => void;
   onSort: (sortColumn: Sort) => void;
-  currenPageMovies: MovieType[];
+  currenPageMovies: MovieState[];
   sortColumn: Sort;
 }
 
@@ -17,20 +17,20 @@ export const MoviesTable = (props: MoviesTableProps) => {
 
   const columns = [
     {
-      path: "title",
-      title: "Title",
-      content: (movie: MovieType) => (
+      path: 'title',
+      title: 'Title',
+      content: (movie: MovieState) => (
         <Link to={`/movies/${movie._id}`} className="text-decoration-none">
           {movie.title}
         </Link>
       ),
     },
-    { path: "genre.name", title: "Genre" },
-    { path: "numberInStock", title: "Stock" },
-    { path: "dailyRentalRate", title: "Rate" },
+    { path: 'genre.name', title: 'Genre' },
+    { path: 'numberInStock', title: 'Stock' },
+    { path: 'dailyRentalRate', title: 'Rate' },
     {
-      key: "like",
-      content: (movie: MovieType) => (
+      key: 'like',
+      content: (movie: MovieState) => (
         <Like
           onLikeClick={() => onLikeClick(movie._id)}
           isLiked={movie.liked ?? false}
@@ -38,8 +38,8 @@ export const MoviesTable = (props: MoviesTableProps) => {
       ),
     },
     {
-      key: "delete",
-      content: (movie: MovieType) => (
+      key: 'delete',
+      content: (movie: MovieState) => (
         <button onClick={() => onDelete(movie._id)} className="btn btn-danger">
           Delete
         </button>
