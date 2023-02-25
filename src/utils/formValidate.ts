@@ -10,6 +10,7 @@ export const formValidate = (account: AccountState) => {
   const options = { abortEarly: false };
   const { error } = schema.validate(account, options);
 
+  //return imediatly if there are any errors, don't make nay api call...
   if (!error) return null;
 
   const errors: AccountErrors = {};

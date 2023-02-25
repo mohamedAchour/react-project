@@ -20,7 +20,7 @@ function App() {
         {/* switch will enable to render links from most specific ones to most generics or use exact on "/" !!*/}
         <Switch>
           {/* to pass props to a component use render instead */}
-          {/* pass down all other propos */}
+          {/* pass down all other props */}
 
           <Route path="/movies/:id" component={MoviesForm} />
           <Route path="/movies" component={Movies} />

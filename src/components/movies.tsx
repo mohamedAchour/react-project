@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { getGenres } from "../services/fakeGenreService";
-import { getMovies } from "../services/fakeMovieService";
-import { paginate } from "../utils/paginate";
-import { sortItems } from "../utils/sort";
-import { ListItems } from "./common/listItems";
-import { Pagination } from "./common/pagination";
-import { MoviesTable } from "./moviesTable";
+import React, { useEffect, useState } from 'react';
+import { getGenres } from '../services/fakeGenreService';
+import { getMovies } from '../services/fakeMovieService';
+import { paginate } from '../utils/paginate';
+import { sortItems } from '../utils/sort';
+import { ListItems } from './common/listItems';
+import { Pagination } from './common/pagination';
+import { MoviesTable } from './moviesTable';
 
-export interface MovieType {
+export interface MovieState {
   _id: string;
   title: string;
   genre: { _id: string; name: string };
@@ -23,19 +23,19 @@ export interface Genre {
 }
 export interface Sort {
   sortBy: string;
-  sortOrder: "asc" | "desc";
+  sortOrder: 'asc' | 'desc';
 }
 export const Movies = () => {
-  const [movies, setMovies] = useState<MovieType[]>(getMovies());
+  const [movies, setMovies] = useState<MovieState[]>(getMovies());
   const [genres, setGenres] = useState<Genre[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedGenre, setSelectedGenre] = useState<Genre>({
-    _id: "",
-    name: "All genres",
+    _id: '',
+    name: 'All genres',
   });
   const [sortColumn, setSortColumn] = useState<Sort>({
-    sortBy: "",
-    sortOrder: "asc",
+    sortBy: '',
+    sortOrder: 'asc',
   });
   const moviesPerPage = 4;
 
@@ -68,7 +68,7 @@ export const Movies = () => {
 
   const handleLikeClick = (id: string | undefined) => {
     const tmp_movies = [...movies];
-    const selectedMovie: MovieType | any = tmp_movies.find(
+    const selectedMovie: MovieState | any = tmp_movies.find(
       (movie) => movie._id === id
     );
     const index = tmp_movies.indexOf(selectedMovie);
@@ -84,7 +84,7 @@ export const Movies = () => {
   const handleGenreClick = (genre: Genre) => {
     genre._id
       ? setSelectedGenre(genre)
-      : setSelectedGenre({ _id: "", name: "All genres" });
+      : setSelectedGenre({ _id: '', name: 'All genres' });
   };
 
   const handleSort = (sortColumn: Sort) => {

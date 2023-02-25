@@ -1,8 +1,8 @@
-import { MovieType } from "./../components/movies";
-import _ from "lodash";
+import { MovieState } from './../components/movies';
+import _ from 'lodash';
 
 export const paginate = (
-  items: MovieType[],
+  items: MovieState[],
   itemsPerPage: number,
   pageNumber: number
 ) => {
