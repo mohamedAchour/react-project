@@ -1,19 +1,21 @@
-import { AccountErrors, AccountState } from '../types/types';
 import Joi from 'joi';
 
-export const formValidate = (account: AccountState) => {
-  const schema = Joi.object({
-    username: Joi.string().required().label('Username'),
-    password: Joi.string().required().label('Password'),
-  });
+type FormData = {
+  [key: string]: string;
+};
 
+type FormErrors = {
+  [key: string]: string;
+};
+
+export const formValidate = (data: FormData, schema: Joi.ObjectSchema<any>) => {
   const options = { abortEarly: false };
-  const { error } = schema.validate(account, options);
+  const { error } = schema.validate(data, options);
 
   //return imediatly if there are any errors, don't make nay api call...
   if (!error) return null;
 
-  const errors: AccountErrors = {};
+  const errors: FormErrors = {};
   error.details.forEach((err) => {
     errors[err.path[0]] = err.message;
   });

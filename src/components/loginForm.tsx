@@ -1,47 +1,36 @@
-import React, { useRef, useState } from 'react';
-import { AccountErrors, AccountState } from '../types/types';
+import React, { useRef } from 'react';
+import Joi from 'joi';
+
 import { FormInput } from './common/formInput';
 import { formValidate } from '../utils/formValidate';
-import { propertyValidate } from '../utils/propertyValidate';
+import { useForm } from '../hooks/form';
 
+interface AccountState {
+  [key: string]: string;
+  username: string;
+  password: string;
+}
 export const LoginForm = () => {
-  const [account, setAccount] = useState<AccountState>({
-    username: '', // do not set this to null, otherwise you'll get an uncontrolled elment
-    password: '',
+  const password = useRef<HTMLInputElement>();
+  const schema = Joi.object({
+    username: Joi.string().required().label('Username'),
+    password: Joi.string().required().label('Password'),
   });
 
-  const [errors, setErrors] = useState<AccountErrors>();
-
-  const password = useRef<HTMLInputElement>();
-  //SyntheticEvent: is the base event for all other events. Should be used when unsure about event type
-  const handleSubmit = (e: React.SyntheticEvent) => {
-    //This prevents the default behavior of the event, sending requests to the server --> full reload !!
-    e.preventDefault();
-
-    const errorsTmp = formValidate(account);
-    setErrors(errorsTmp || {});
-
-    if (errorsTmp) return;
-
-    // Call the server, save the changes, redirect user to different page
-    console.log('Form submitted');
+  const submit = (account: AccountState) => {
+    //submit logic
+    console.log('Login form submitted:', values);
+    // You could make a request to your server here to authenticate the user
   };
-
-  const handleChange = ({
-    currentTarget: { name, value },
-  }: React.ChangeEvent<HTMLInputElement>) => {
-    const errorsTmp = { ...errors };
-
-    const error = propertyValidate(name, value);
-
-    if (error) errorsTmp[name] = error;
-    else delete errorsTmp[name];
-    setErrors(errorsTmp);
-    const accountTmp: AccountState = { ...account };
-    const currentField = name;
-    accountTmp[currentField] = value;
-    setAccount(accountTmp);
-  };
+  const { values, errors, isSubmitting, handleChange, handleSubmit } =
+    useForm<AccountState>({
+      initialValues: {
+        username: '', // do not set this to null, otherwise you'll get an uncontrolled elment
+        password: '',
+      },
+      onSubmit: (values) => submit(values),
+      validate: (values) => formValidate(values, schema),
+    });
 
   return (
     <div>
@@ -49,7 +38,7 @@ export const LoginForm = () => {
       <form onSubmit={handleSubmit} className="needs-validation" noValidate>
         <FormInput
           name="username"
-          value={account.username}
+          value={values.username}
           placeholder="addess@email.com"
           type="email"
           onChange={handleChange}
@@ -59,7 +48,7 @@ export const LoginForm = () => {
 
         <FormInput
           name="password"
-          value={account.password}
+          value={values.password}
           type="password"
           onChange={handleChange}
           inputRef={password}
@@ -68,10 +57,17 @@ export const LoginForm = () => {
         />
         <button
           type="submit"
-          disabled={!!formValidate(account)}
+          disabled={!!formValidate(values, schema)}
           className={`btn btn-primary`}
         >
-          Login
+          <span
+            className={
+              isSubmitting ? 'spinner-border spinner-border-sm me-2' : 'd-none'
+            }
+            role="status"
+            aria-hidden="true"
+          ></span>
+          {isSubmitting ? 'Loging...' : 'Login'}
         </button>
       </form>
     </div>
