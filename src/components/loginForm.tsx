@@ -22,6 +22,7 @@ export const LoginForm = () => {
     console.log('Login form submitted:', values);
     // You could make a request to your server here to authenticate the user
   };
+
   const { values, errors, isSubmitting, handleChange, handleSubmit } =
     useForm<AccountState>({
       initialValues: {
@@ -39,11 +40,10 @@ export const LoginForm = () => {
         <FormInput
           name="username"
           value={values.username}
-          placeholder="addess@email.com"
           type="email"
+          placeholder="addess@email.com"
           onChange={handleChange}
           error={errors?.username}
-          required
         />
 
         <FormInput
@@ -53,7 +53,6 @@ export const LoginForm = () => {
           onChange={handleChange}
           inputRef={password}
           error={errors?.password}
-          required
         />
         <button
           type="submit"

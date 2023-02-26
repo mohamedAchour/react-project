@@ -1,7 +1,7 @@
-import * as React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortDown, faSortUp } from "@fortawesome/free-solid-svg-icons";
-import { Sort } from "../movies";
+import * as React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
+import { Sort } from '../movies';
 
 export interface TableHeaderProps {
   columns: any[];
@@ -15,17 +15,17 @@ export const TableHeader = (props: TableHeaderProps) => {
       sortColumn.sortBy === sortBy
         ? {
             sortBy,
-            sortOrder: sortColumn.sortOrder === "asc" ? "desc" : "asc",
+            sortOrder: sortColumn.sortOrder === 'asc' ? 'desc' : 'asc',
           }
         : {
             sortBy,
-            sortOrder: "asc",
+            sortOrder: 'asc',
           };
 
     onSort(_sortColumn);
   };
 
-  const sortIcon = sortColumn.sortOrder === "asc" ? faSortUp : faSortDown;
+  const sortIcon = sortColumn.sortOrder === 'asc' ? faSortUp : faSortDown;
   return (
     <thead>
       <tr>
@@ -33,12 +33,12 @@ export const TableHeader = (props: TableHeaderProps) => {
           <th
             key={item.path || item.key}
             style={{
-              cursor: "pointer",
-              width: item === headerItems[0] ? "25%" : "20%",
+              cursor: 'pointer',
+              width: item === headerItems[0] ? '25%' : '20%',
             }}
             scope="col"
             onClick={() => {
-              raiseSort(item.path);
+              !item.key && raiseSort(item.path);
             }}
           >
             {item.title}
