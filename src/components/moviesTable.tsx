@@ -1,7 +1,7 @@
 import React from 'react';
 import { MovieState, Sort } from './movies';
 import { Like } from './common/like';
-import { Table } from './common/table';
+import { Table } from './common/table/table';
 import { Link } from 'react-router-dom';
 
 export interface MoviesTableProps {

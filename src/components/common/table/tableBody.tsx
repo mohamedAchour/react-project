@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { MovieState } from '../movies';
+import { MovieState } from '../../movies';
 
 export interface TableBodyProps {
   data: any[];

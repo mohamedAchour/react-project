@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSortDown, faSortUp } from '@fortawesome/free-solid-svg-icons';
-import { Sort } from '../movies';
+import { Sort } from '../../movies';
 
 export interface TableHeaderProps {
   columns: any[];

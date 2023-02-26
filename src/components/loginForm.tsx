@@ -1,9 +1,10 @@
 import React, { useRef } from 'react';
 import Joi from 'joi';
 
-import { FormInput } from './common/formInput';
+import { FormInput } from './common/form/formInput';
 import { formValidate } from '../utils/formValidate';
 import { useForm } from '../hooks/useForm';
+import { SubmittButton } from './common/form/submittButton';
 
 interface AccountState {
   [key: string]: string;
@@ -54,20 +55,10 @@ export const LoginForm = () => {
           inputRef={password}
           error={errors?.password}
         />
-        <button
-          type="submit"
+        <SubmittButton
           disabled={!!formValidate(values, schema)}
-          className={`btn btn-primary`}
-        >
-          <span
-            className={
-              isSubmitting ? 'spinner-border spinner-border-sm me-2' : 'd-none'
-            }
-            role="status"
-            aria-hidden="true"
-          ></span>
-          {isSubmitting ? 'Loging...' : 'Login'}
-        </button>
+          isSubmitting={isSubmitting}
+        />
       </form>
     </div>
   );
