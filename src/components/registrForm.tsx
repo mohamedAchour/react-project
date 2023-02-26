@@ -14,8 +14,14 @@ interface RegisterState {
 
 export const RegistrForm = () => {
   const schema = Joi.object({
-    username: Joi.string().required().label('Username'),
-    password: Joi.string().min(5).required().label('Password'),
+    username: Joi.string()
+      .email({
+        minDomainSegments: 2, // Make sure there is at least one dot in the domain
+        tlds: { allow: ['com', 'net', 'org', 'edu', 'gov'] }, // Specify the list of allowed top-level domains
+      })
+      .required()
+      .label('Username'),
+    password: Joi.string().min(5).max(30).required().label('Password'),
     name: Joi.string().required().label('Name'),
   });
 
