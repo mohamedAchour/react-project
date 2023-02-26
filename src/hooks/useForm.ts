@@ -22,8 +22,8 @@ export const useForm = <T extends FormValues>(params: UseFormOptions<T>) => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.currentTarget;
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.currentTarget;
     setValues({ ...values, [name]: value });
 
     const errorsTmp = { ...errors };
@@ -35,8 +35,8 @@ export const useForm = <T extends FormValues>(params: UseFormOptions<T>) => {
     setValues({ ...values, [name]: value });
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
     if (validate) {
       const formErrors = validate(values);

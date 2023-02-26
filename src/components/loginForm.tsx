@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import Joi from 'joi';
 
 import { FormInput } from './common/form/formInput';
@@ -12,7 +12,6 @@ interface AccountState {
   password: string;
 }
 export const LoginForm = () => {
-  const password = useRef<HTMLInputElement>();
   const schema = Joi.object({
     username: Joi.string().required().label('Username'),
     password: Joi.string().required().label('Password'),
@@ -34,30 +33,36 @@ export const LoginForm = () => {
       validate: (values) => formValidate(values, schema),
     });
 
+  const formFields = [
+    {
+      name: 'username',
+      type: 'email',
+      placeholder: 'addess@email.com',
+    },
+    {
+      name: 'password',
+      type: 'password',
+    },
+  ];
   return (
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit} className="needs-validation" noValidate>
-        <FormInput
-          name="username"
-          value={values.username}
-          type="email"
-          placeholder="addess@email.com"
-          onChange={handleChange}
-          error={errors?.username}
-        />
-
-        <FormInput
-          name="password"
-          value={values.password}
-          type="password"
-          onChange={handleChange}
-          inputRef={password}
-          error={errors?.password}
-        />
+        {formFields.map(({ name, type, placeholder }) => (
+          <FormInput
+            key={name}
+            name={name}
+            value={values[name]}
+            type={type}
+            placeholder={placeholder}
+            onChange={handleChange}
+            error={errors[name]}
+          />
+        ))}
         <SubmittButton
           disabled={!!formValidate(values, schema)}
           isSubmitting={isSubmitting}
+          label="Login"
         />
       </form>
     </div>
