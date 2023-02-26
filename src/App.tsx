@@ -11,6 +11,7 @@ import { Admin } from './routes/admin/admin';
 import { Home } from './routes/home';
 import { MoviesForm } from './components/movies-form';
 import { LoginForm } from './components/loginForm';
+import { RegistrForm } from './components/registrForm';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/movies/:id" component={MoviesForm} />
           <Route path="/movies" component={Movies} />
           <Route path="/login" component={LoginForm} />
+          <Route path="/register" component={RegistrForm} />
           <Route path="/profile" component={Profile} />
           <Route path="/products" component={Products} />
           <Route path="/about" component={About} />

@@ -1,33 +1,36 @@
-import React from 'react';
 import Joi from 'joi';
-
-import { FormInput } from './common/form/formInput';
-import { formValidate } from '../utils/formValidate';
+import React from 'react';
 import { useForm } from '../hooks/useForm';
+import { formValidate } from '../utils/formValidate';
+import { FormInput } from './common/form/formInput';
 import { SubmittButton } from './common/form/submittButton';
 
-interface AccountState {
+interface RegisterState {
   [key: string]: string;
   username: string;
   password: string;
+  name: string;
 }
-export const LoginForm = () => {
+
+export const RegistrForm = () => {
   const schema = Joi.object({
     username: Joi.string().required().label('Username'),
-    password: Joi.string().required().label('Password'),
+    password: Joi.string().min(5).required().label('Password'),
+    name: Joi.string().required().label('Name'),
   });
 
-  const submit = (account: AccountState) => {
+  const submit = (account: RegisterState) => {
     //submit logic
-    console.log('Login form submitted:', values);
+    console.log('Registration form submitted:', values);
     // You could make a request to your server here to authenticate the user
   };
 
   const { values, errors, isSubmitting, handleChange, handleSubmit } =
-    useForm<AccountState>({
+    useForm<RegisterState>({
       initialValues: {
         username: '', // do not set this to null, otherwise you'll get an uncontrolled element
         password: '',
+        name: '',
       },
       onSubmit: (values) => submit(values),
       schema: schema,
@@ -43,10 +46,14 @@ export const LoginForm = () => {
       name: 'password',
       type: 'password',
     },
+    {
+      name: 'name',
+      type: 'text',
+    },
   ];
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <form onSubmit={handleSubmit} className="needs-validation" noValidate>
         {formFields.map(({ name, type, placeholder }) => (
           <FormInput
@@ -62,7 +69,7 @@ export const LoginForm = () => {
         <SubmittButton
           disabled={!!formValidate(values, schema)}
           isSubmitting={isSubmitting}
-          label="Login"
+          label="Register"
         />
       </form>
     </div>

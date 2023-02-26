@@ -1,11 +1,13 @@
 import Joi from 'joi';
 
-export const propertyValidate = (name: string, value: string) => {
+export const propertyValidate = (
+  name: string,
+  value: string,
+  propertySchemaLike: Joi.SchemaLike
+) => {
   const property = { [name]: value };
   const schema = Joi.object({
-    [name]: Joi.string()
-      .required()
-      .label(name.charAt(0).toUpperCase() + name.slice(1)),
+    [name]: propertySchemaLike,
   });
 
   // in this case, we indeed need aborting early

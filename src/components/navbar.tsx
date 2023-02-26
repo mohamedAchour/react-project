@@ -49,16 +49,14 @@ export const Navbar = () => {
             </li>
           </ul>
           <form className="d-lg-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-
-            <li className="btn btn-outline-success">
+            <li className="btn btn-outline-success me-2">
               <NavLink className="nav-link text-nowrap" to="/login">
                 Log in
+              </NavLink>
+            </li>
+            <li className="btn btn-success fw-bold">
+              <NavLink className="nav-link text-nowrap" to="/register">
+                Register
               </NavLink>
             </li>
           </form>
