@@ -15,11 +15,9 @@ interface UseFormOptions<T extends FormValues> {
   validate?: (values: T) => FormErrors | null;
 }
 
-export function useForm<T extends FormValues>({
-  initialValues,
-  onSubmit,
-  validate,
-}: UseFormOptions<T>) {
+export const useForm = <T extends FormValues>(params: UseFormOptions<T>) => {
+  const { initialValues, onSubmit, validate } = params;
+
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -60,4 +58,4 @@ export function useForm<T extends FormValues>({
     handleChange,
     handleSubmit,
   };
-}
+};

@@ -3,7 +3,7 @@ import Joi from 'joi';
 
 import { FormInput } from './common/formInput';
 import { formValidate } from '../utils/formValidate';
-import { useForm } from '../hooks/form';
+import { useForm } from '../hooks/useForm';
 
 interface AccountState {
   [key: string]: string;
@@ -26,7 +26,7 @@ export const LoginForm = () => {
   const { values, errors, isSubmitting, handleChange, handleSubmit } =
     useForm<AccountState>({
       initialValues: {
-        username: '', // do not set this to null, otherwise you'll get an uncontrolled elment
+        username: '', // do not set this to null, otherwise you'll get an uncontrolled element
         password: '',
       },
       onSubmit: (values) => submit(values),
