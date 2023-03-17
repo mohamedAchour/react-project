@@ -1,33 +1,41 @@
-import React from "react";
 import Joi from "joi";
-
-import { FormInput } from "./common/form/formInput";
+import React from "react";
 import { useForm } from "../hooks/useForm";
+import { FormInput } from "./common/form/formInput";
 import { SubmittButton } from "./common/form/submittButton";
-import { formValidate } from "../utils/formValidate";
 
-interface AccountState {
+interface RegisterState {
   [key: string]: string;
   username: string;
   password: string;
+  name: string;
 }
-export const LoginForm = () => {
+
+export const RegistrForm = () => {
   const schema = Joi.object({
-    username: Joi.string().required().label("Username"),
-    password: Joi.string().required().label("Password"),
+    username: Joi.string()
+      .email({
+        minDomainSegments: 2, // Make sure there is at least one dot in the domain
+        tlds: { allow: ["com", "net", "org", "edu", "gov"] }, // Specify the list of allowed top-level domains
+      })
+      .required()
+      .label("Username"),
+    password: Joi.string().min(5).max(30).required().label("Password"),
+    name: Joi.string().required().label("Name"),
   });
 
-  const submit = (account: AccountState) => {
+  const submit = (account: RegisterState) => {
     //submit logic
-    console.log("Login form submitted:", values);
+    console.log("Registration form submitted:", values);
     // You could make a request to your server here to authenticate the user
   };
 
   const { values, errors, isSubmitting, handleChange, handleSubmit } =
-    useForm<AccountState>({
+    useForm<RegisterState>({
       initialValues: {
         username: "", // do not set this to null, otherwise you'll get an uncontrolled element
         password: "",
+        name: "",
       },
       onSubmit: (values) => submit(values),
       schema: schema,
@@ -43,10 +51,14 @@ export const LoginForm = () => {
       name: "password",
       type: "password",
     },
+    {
+      name: "name",
+      type: "text",
+    },
   ];
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <form onSubmit={handleSubmit} className="needs-validation" noValidate>
         {formFields.map(({ name, type, placeholder }) => (
           <FormInput
@@ -59,11 +71,7 @@ export const LoginForm = () => {
             error={errors[name]}
           />
         ))}
-        <SubmittButton
-          disabled={!!formValidate(values, schema)}
-          isSubmitting={isSubmitting}
-          label="Login"
-        />
+        <SubmittButton isSubmitting={isSubmitting} label="Register" />
       </form>
     </div>
   );

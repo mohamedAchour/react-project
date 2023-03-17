@@ -1,9 +1,9 @@
-import Joi from 'joi';
-import React from 'react';
-import { useForm } from '../hooks/useForm';
-import { formValidate } from '../utils/formValidate';
-import { FormInput } from './common/form/formInput';
-import { SubmittButton } from './common/form/submittButton';
+import Joi from "joi";
+import React from "react";
+import { useForm } from "../hooks/useForm";
+import { formValidate } from "../utils/formValidate";
+import { FormInput } from "./common/form/formInput";
+import { SubmittButton } from "./common/form/submittButton";
 
 interface RegisterState {
   [key: string]: string;
@@ -17,26 +17,26 @@ export const RegistrForm = () => {
     username: Joi.string()
       .email({
         minDomainSegments: 2, // Make sure there is at least one dot in the domain
-        tlds: { allow: ['com', 'net', 'org', 'edu', 'gov'] }, // Specify the list of allowed top-level domains
+        tlds: { allow: ["com", "net", "org", "edu", "gov"] }, // Specify the list of allowed top-level domains
       })
       .required()
-      .label('Username'),
-    password: Joi.string().min(5).max(30).required().label('Password'),
-    name: Joi.string().required().label('Name'),
+      .label("Username"),
+    password: Joi.string().min(5).max(30).required().label("Password"),
+    name: Joi.string().required().label("Name"),
   });
 
   const submit = (account: RegisterState) => {
     //submit logic
-    console.log('Registration form submitted:', values);
+    console.log("Registration form submitted:", values);
     // You could make a request to your server here to authenticate the user
   };
 
   const { values, errors, isSubmitting, handleChange, handleSubmit } =
     useForm<RegisterState>({
       initialValues: {
-        username: '', // do not set this to null, otherwise you'll get an uncontrolled element
-        password: '',
-        name: '',
+        username: "", // do not set this to null, otherwise you'll get an uncontrolled element
+        password: "",
+        name: "",
       },
       onSubmit: (values) => submit(values),
       schema: schema,
@@ -44,17 +44,17 @@ export const RegistrForm = () => {
 
   const formFields = [
     {
-      name: 'username',
-      type: 'email',
-      placeholder: 'addess@email.com',
+      name: "username",
+      type: "email",
+      placeholder: "addess@email.com",
     },
     {
-      name: 'password',
-      type: 'password',
+      name: "password",
+      type: "password",
     },
     {
-      name: 'name',
-      type: 'text',
+      name: "name",
+      type: "text",
     },
   ];
   return (
