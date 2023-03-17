@@ -11,6 +11,7 @@ import { Admin } from "./routes/admin/admin";
 import { Home } from "./routes/home";
 import { LoginForm } from "./components/loginForm";
 import { RegistrForm } from "./components/registerForm";
+
 import { MovieForm } from "./components/movieForm";
 
 function App() {
