@@ -1,21 +1,45 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
-type FormInputType = {
+interface FormInputType {
+  [key: string]: any;
   name: string;
+  label?: string;
   error?: string;
-};
+}
 
-export const FormInput = (
-  props: FormInputType &
-    Omit<React.HTMLProps<HTMLInputElement>, keyof FormInputType>
-) => {
-  const { name, error, ...rest } = props;
+export const FormInput = (props: FormInputType) => {
+  const { name, error, label, options, ...rest } = props;
+
   return (
     <div className="form-group mb-3 col-md-4">
-      <label htmlFor={name} className="form-label">
-        {name && name?.charAt(0).toUpperCase() + name?.slice(1)}
-      </label>
-      <input className="form-control" name={name} id={name} {...rest} />
+      <div className="input-group mb-3 col-md-3">
+        <label htmlFor={label} className="form-label">
+          {label && label?.charAt(0).toUpperCase() + label?.slice(1)}
+        </label>
+        <input className="form-control" name={name} id={name} {...rest} />
+
+        {options && (
+          <>
+            <button
+              className="btn btn-outline-secondary dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            ></button>
+            <ul className="dropdown-menu">
+              {options.map((option: any) => (
+                <li key={option}>
+                  <Link className="dropdown-item" to="#">
+                    {option.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+
       {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );

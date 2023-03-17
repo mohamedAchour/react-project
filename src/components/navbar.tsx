@@ -1,5 +1,5 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import { NavLink } from "react-router-dom";
 
 export const Navbar = () => {
   return (
@@ -12,11 +12,11 @@ export const Navbar = () => {
             height="30"
             alt=""
           />
-          <p style={{ display: 'inline', paddingLeft: '10px' }}>M. Achour</p>
+          <p style={{ display: "inline", paddingLeft: "10px" }}>M. Achour</p>
         </NavLink>
 
-        <div className="collapse navbar-collapse" id="navbarTogglerDemo03">
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+        <div className="collapse navbar-collapse" id="navbarScroll">
+          <ul className="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scrol">
             <li className="nav-item">
               <NavLink className="nav-link " to="/">
                 Home

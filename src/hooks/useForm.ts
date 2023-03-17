@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { propertyValidate } from '../utils/propertyValidate';
-import Joi from 'joi';
-import { formValidate } from '../utils/formValidate';
+import { useState } from "react";
+import { propertyValidate } from "../utils/propertyValidate";
+import Joi from "joi";
+import { formValidate } from "../utils/formValidate";
+import { GenreState } from "../components/movies";
 
 interface FormValues {
   [key: string]: any;
@@ -23,6 +24,10 @@ export const useForm = <T extends FormValues>(params: UseFormOptions<T>) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSelect = (name: string, value: GenreState) => {
+    setValues({ ...values, [name]: value });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
@@ -52,6 +57,7 @@ export const useForm = <T extends FormValues>(params: UseFormOptions<T>) => {
     errors,
     isSubmitting,
     handleChange,
+    handleSelect,
     handleSubmit,
   };
 };

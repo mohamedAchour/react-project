@@ -1,7 +1,7 @@
 import Joi from 'joi';
 
 type FormData = {
-  [key: string]: string;
+  [key: string]: string | number;
 };
 
 type FormErrors = {

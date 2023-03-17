@@ -1,10 +1,10 @@
 import React from "react";
-import { Genre } from "../movies";
+import { GenreState } from "../movies";
 
 export interface ListItemsProps {
   items: any[];
-  selectedItem: Genre;
-  onItemSelect: (item: Genre) => void;
+  selectedItem: GenreState;
+  onItemSelect: (item: GenreState) => void;
 }
 export const ListItems = (props: ListItemsProps) => {
   const { items, onItemSelect, selectedItem } = props;

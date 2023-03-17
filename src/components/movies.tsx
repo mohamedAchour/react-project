@@ -1,45 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import { getGenres } from '../services/fakeGenreService';
-import { getMovies } from '../services/fakeMovieService';
-import { paginate } from '../utils/paginate';
-import { sortItems } from '../utils/sort';
-import { ListItems } from './common/listItems';
-import { Pagination } from './common/pagination';
-import { MoviesTable } from './moviesTable';
+import React, { useEffect, useMemo, useState } from "react";
+import { getGenres } from "../services/fakeGenreService";
+import { getMovies } from "../services/fakeMovieService";
+import { paginate } from "../utils/paginate";
+import { sortItems } from "../utils/sort";
+import { ListItems } from "./common/listItems";
+import { Pagination } from "./common/pagination";
+import { MoviesTable } from "./moviesTable";
+import { Link } from "react-router-dom";
 
 export interface MovieState {
-  _id: string;
+  [key: string]: any;
   title: string;
   genre: { _id: string; name: string };
-  numberInStock: number;
-  dailyRentalRate: number;
+  numberInStock: number | string;
+  dailyRentalRate: number | string;
   publishDate?: string;
   liked?: boolean;
 }
 
-export interface Genre {
+export interface GenreState {
   _id: string | null;
   name: string | null;
 }
-export interface Sort {
+export interface SortState {
   sortBy: string;
-  sortOrder: 'asc' | 'desc';
+  sortOrder: "asc" | "desc";
 }
 export const Movies = () => {
   const [movies, setMovies] = useState<MovieState[]>(getMovies());
-  const [genres, setGenres] = useState<Genre[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [selectedGenre, setSelectedGenre] = useState<Genre>({
-    _id: '',
-    name: 'All genres',
+  const [selectedGenre, setSelectedGenre] = useState<GenreState>({
+    _id: null,
+    name: null,
   });
-  const [sortColumn, setSortColumn] = useState<Sort>({
-    sortBy: '',
-    sortOrder: 'asc',
+  const [sortColumn, setSortColumn] = useState<SortState>({
+    sortBy: "",
+    sortOrder: "asc",
   });
   const moviesPerPage = 4;
+  const genres = getGenres();
 
-  const getPagedMovies = () => {
+  const { currenPagedMovies, totalCount, currentPageCount } = useMemo(() => {
     const filteredMovies = selectedGenre._id
       ? movies.filter((movie) => movie.genre._id === selectedGenre._id)
       : movies;
@@ -57,22 +58,23 @@ export const Movies = () => {
     return {
       currenPagedMovies: currenPagedMovies,
       totalCount: filteredMovies.length,
+      currentPageCount: currenPagedMovies.length,
     };
-  };
+  }, [currentPage, movies, selectedGenre, sortColumn, moviesPerPage]);
 
-  const { currenPagedMovies, totalCount } = getPagedMovies();
-
-  const handleDelete = (id: string) => {
+  const handleDelete = (id?: string) => {
     setMovies(movies.filter((movie) => movie._id !== id));
   };
 
-  const handleLikeClick = (id: string | undefined) => {
+  const handleLikeClick = (id: string) => {
     const tmp_movies = [...movies];
-    const selectedMovie: MovieState | any = tmp_movies.find(
+    const selectedMovie: MovieState | undefined = tmp_movies.find(
       (movie) => movie._id === id
     );
-    const index = tmp_movies.indexOf(selectedMovie);
-    tmp_movies[index].liked = !tmp_movies[index].liked;
+    if (selectedMovie) {
+      const index = tmp_movies.indexOf(selectedMovie);
+      tmp_movies[index].liked = !tmp_movies[index].liked;
+    }
 
     setMovies(tmp_movies);
   };
@@ -81,31 +83,33 @@ export const Movies = () => {
     setCurrentPage(pgNumber);
   };
 
-  const handleGenreClick = (genre: Genre) => {
+  const handleGenreClick = (genre: GenreState) => {
     genre._id
       ? setSelectedGenre(genre)
-      : setSelectedGenre({ _id: '', name: 'All genres' });
+      : setSelectedGenre({ _id: null, name: null });
   };
 
-  const handleSort = (sortColumn: Sort) => {
+  const handleSort = (sortColumn: SortState) => {
     setSortColumn(sortColumn);
   };
 
-  /***effects***/
   useEffect(() => {
-    setMovies(getMovies());
-    setGenres(getGenres());
-  }, []);
-
-  useEffect(() => {
-    if (currenPagedMovies.length === 0) {
+    if (currentPage > 1 && currentPageCount === 0) {
       setCurrentPage(currentPage - 1);
     }
-  }, [currenPagedMovies.length, currentPage]);
-  /***render***/
+  }, [currentPageCount, currentPage]);
+
   const { length: count } = movies;
+
   if (count === 0)
-    return <p className="h3">The are no movies in the database</p>;
+    return (
+      <>
+        <p className="h3">The are no movies in the database</p>
+        <Link to={`/movies/new`} className="btn btn-primary mb-4">
+          New movie
+        </Link>
+      </>
+    );
   return (
     <>
       <div className="row">
@@ -117,7 +121,10 @@ export const Movies = () => {
           />
         </div>
         <div className="col">
-          <p className="h3 mb-5">
+          <Link to={`/movies/new`} className="btn btn-primary mb-4">
+            New movie
+          </Link>
+          <p className="h3 mb-2">
             Showing
             <span className="badge bg-success m-1 px-2 py-1">{totalCount}</span>
             movies in the database
