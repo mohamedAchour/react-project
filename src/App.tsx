@@ -10,7 +10,7 @@ import { NotFound } from "./routes/not-found";
 import { Admin } from "./routes/admin/admin";
 import { Home } from "./routes/home";
 import { LoginForm } from "./components/loginForm";
-import { RegistrForm } from "./components/registrForm";
+import { RegistrForm } from "./components/regisetrForm";
 import { MovieForm } from "./components/movieForm";
 
 function App() {
