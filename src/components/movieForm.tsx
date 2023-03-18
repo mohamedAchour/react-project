@@ -13,7 +13,6 @@ export const MovieForm = (props: any) => {
 
   const schema = Joi.object({
     title: Joi.string().required().label("Title"),
-    genre: Joi.string().required().label("Genre"),
     numberInStock: Joi.number()
       .min(0)
       .max(100)
@@ -33,17 +32,23 @@ export const MovieForm = (props: any) => {
     //go back to movies page
   };
 
-  const { values, errors, isSubmitting, handleChange, handleSubmit } =
-    useForm<MovieState>({
-      initialValues: {
-        title: "",
-        genre: { _id: "", name: "" },
-        numberInStock: "",
-        dailyRentalRate: "",
-      },
-      onSubmit: (values) => submit(values),
-      schema: schema,
-    });
+  const {
+    values,
+    errors,
+    isSubmitting,
+    handleChange,
+    handleOption,
+    handleSubmit,
+  } = useForm<MovieState>({
+    initialValues: {
+      title: "",
+      genre: { _id: "", name: "" },
+      numberInStock: "",
+      dailyRentalRate: "",
+    },
+    onSubmit: (values) => submit(values),
+    schema: schema,
+  });
 
   const formFields = [
     {
@@ -79,9 +84,10 @@ export const MovieForm = (props: any) => {
             key={name}
             label={title}
             name={name}
-            value={name === "genre" ? values[name]["name"] : values[name]}
+            value={name === "genre" ? values["genre"]["name"] : values[name]}
             type={type}
             onChange={handleChange}
+            onOption={handleOption}
             error={errors[name]}
             options={options}
           />
