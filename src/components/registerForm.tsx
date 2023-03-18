@@ -1,10 +1,7 @@
 import Joi from "joi";
 import React from "react";
 import { useForm } from "../hooks/useForm";
-<<<<<<< HEAD:src/components/registerForm.tsx
 import { formValidate } from "../utils/formValidate";
-=======
->>>>>>> dee9d08... code refactring:src/components/regisetrForm.tsx
 import { FormInput } from "./common/form/formInput";
 import { SubmittButton } from "./common/form/submittButton";
 
@@ -75,7 +72,11 @@ export const RegistrForm = () => {
             error={errors[name]}
           />
         ))}
-        <SubmittButton isSubmitting={isSubmitting} label="Register" />
+        <SubmittButton
+          disabled={!!formValidate(values, schema)}
+          isSubmitting={isSubmitting}
+          label="Register"
+        />
       </form>
     </div>
   );
