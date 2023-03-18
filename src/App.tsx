@@ -10,7 +10,7 @@ import { NotFound } from "./routes/not-found";
 import { Admin } from "./routes/admin/admin";
 import { Home } from "./routes/home";
 import { LoginForm } from "./components/loginForm";
-import { RegistrForm } from "./components/registerForm";
+import { RegisterForm } from "./components/registerForm";
 import { MovieForm } from "./components/movieForm";
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
           <Route path="/movies" component={Movies} />
           <Route path="/movies/new" component={MovieForm} />
           <Route path="/login" component={LoginForm} />
-          <Route path="/register" component={RegistrForm} />
+          <Route path="/register" component={RegisterForm} />
           <Route path="/profile" component={Profile} />
           <Route path="/products" component={Products} />
           <Route path="/about" component={About} />

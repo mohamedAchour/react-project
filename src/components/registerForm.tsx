@@ -12,7 +12,7 @@ interface RegisterState {
   name: string;
 }
 
-export const RegistrForm = () => {
+export const RegisterForm = () => {
   const schema = Joi.object({
     username: Joi.string()
       .email({
