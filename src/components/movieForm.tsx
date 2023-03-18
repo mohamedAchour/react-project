@@ -5,11 +5,14 @@ import { getGenres } from "../services/fakeGenreService";
 import { formValidate } from "../utils/formValidate";
 import { FormInput } from "./common/form/formInput";
 import { SubmittButton } from "./common/form/submittButton";
-import { saveMovie } from "../services/fakeMovieService";
+import { getMovie, saveMovie } from "../services/fakeMovieService";
 import { MovieState } from "./movies";
 
 export const MovieForm = (props: any) => {
-  const { history } = props;
+  const { history, match } = props;
+
+  const movieId = match.params.id;
+  const movieInDb = getMovie(movieId);
 
   const schema = Joi.object({
     title: Joi.string().required().label("Title"),
@@ -24,6 +27,7 @@ export const MovieForm = (props: any) => {
   const submit = (movie: MovieState) => {
     //submit logic
     console.log("Registration form submitted:", movie);
+    if (movieInDb) movie._id = movieInDb._id;
     saveMovie(movie);
     // You could make a request to your server here to authenticate the user
     setTimeout(() => {
@@ -41,10 +45,10 @@ export const MovieForm = (props: any) => {
     handleSubmit,
   } = useForm<MovieState>({
     initialValues: {
-      title: "",
-      genre: { _id: "", name: "" },
-      numberInStock: "",
-      dailyRentalRate: "",
+      title: movieInDb?.title || "",
+      genre: movieInDb?.genre || { _id: "", name: "" },
+      numberInStock: movieInDb?.numberInStock || "",
+      dailyRentalRate: movieInDb?.dailyRentalRate || "",
     },
     onSubmit: (values) => submit(values),
     schema: schema,
