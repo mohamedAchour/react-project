@@ -14,6 +14,9 @@ export const MovieForm = (props: any) => {
   const movieId = match.params.id;
   const movieInDb = getMovie(movieId);
 
+  console.log(movieId);
+  console.log(movieInDb);
+
   const schema = Joi.object({
     title: Joi.string().required().label("Title"),
     numberInStock: Joi.number()
@@ -27,7 +30,6 @@ export const MovieForm = (props: any) => {
   const submit = (movie: MovieState) => {
     //submit logic
     console.log("Registration form submitted:", movie);
-    if (movieInDb) movie._id = movieInDb._id;
     saveMovie(movie);
     // You could make a request to your server here to authenticate the user
     setTimeout(() => {
@@ -45,6 +47,7 @@ export const MovieForm = (props: any) => {
     handleSubmit,
   } = useForm<MovieState>({
     initialValues: {
+      _id: movieInDb?._id || "",
       title: movieInDb?.title || "",
       genre: movieInDb?.genre || { _id: "", name: "" },
       numberInStock: movieInDb?.numberInStock || "",
